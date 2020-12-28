@@ -1,13 +1,19 @@
-const traitList = {
-    "str": {
-
-    },
-    "con": {
-
+class PrimaryStat {
+    constructor(name) {
+        this.name = name;
     }
 }
 
-class Traits {
+const primaryList = {
+    "str": new PrimaryStat("str"),
+    "dex": new PrimaryStat("dex"),
+    "con": new PrimaryStat("con"),
+    "int": new PrimaryStat("int"),
+    "wis": new PrimaryStat("wis"),
+    "chr": new PrimaryStat("chr")
+}
+
+class PrimaryStatistics {
     constructor(baseStrength, baseConstitution) {
         this.str = baseStrength;
         this.con = baseConstitution;
@@ -22,14 +28,14 @@ class Traits {
     }
 }
 
-class Properties {
-    constructor(traits) {
-        this.update(traits);
+class DerivedStatisitcs {
+    constructor(primary) {
+        this.update(primary);
     }
 
-    update(traits) {
-        this.hp = traits.con * 10.0 + traits.str*2.0;
-        this.atk = traits.str * 5.0;
+    update(primary) {
+        //this.hp = traits.con * 10.0 + traits.str*2.0;
+        //this.atk = traits.str * 5.0;
     }
 }
 
@@ -37,9 +43,9 @@ class Slime {
     constructor(genome) {
         this.dna = new DNA(genome);
         this.proteins = {};
-        this.traits = new Traits(2, 5);
-        this.baseProps = new Properties(this.traits);
-        this.props = this.baseProps;
+        this.primary = new PrimaryStatistics(2, 5);
+        this.baseDerived = new DerivedStatisitcs(this.traits);
+        this.derived = this.baseDerived;
         this.condition = new Condition();
         this.age = 0;
     }
@@ -53,8 +59,8 @@ class Slime {
     }
 }
 
-const databank = new ProteinDataBank(3, traitList);
-const slimeGenome = new Genome(databank, 2, 3);
+const databank = new ProteinDataBank(3, primaryList);
+const slimeGenome = new Genome(databank, 2, 3); //<-- this is next
 var slime = new Slime(slimeGenome);
 var time = 0;
 const endTime = 10;
